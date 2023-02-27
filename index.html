@@ -19,6 +19,121 @@
     <header class="header">
       <img class="header__logo" src="./images/logo.svg" alt="Место" />
     </header>
+    <main class="content">
+      <section class="profile section">
+        <img class="profile__avatar" src="./images/logo.png" alt="Аватар" />
+        <div class="profile__container">
+          <div class="profile__info">
+            <div class="profile__head">
+              <h1 class="profile__name">Survey Man</h1>
+              <button class="button button_type_edit" type="button"></button>
+            </div>
+            <p class="profile__prof">Инженер по замерам</p>
+          </div>
+          <button class="button button_type_add"></button>
+        </div>
+      </section>
+      <section class="elements section">
+        <div class="elements__element">
+          <img
+            class="elements__image"
+            src="./images/company.png"
+            alt="Домбай"
+          />
+          <div class="elements__mask">
+            <h2 class="elements__title">Управление замерами</h2>
+            <button
+              class="elements__like elements__like_active"
+              type="button"
+            ></button>
+          </div>
+        </div>
+        <div class="elements__element">
+          <img
+            class="elements__image"
+            src="./images/company.png"
+            alt="Домбай"
+          />
+          <div class="elements__mask">
+            <h2 class="elements__title">Управление замерами</h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+        <div class="elements__element">
+          <img
+            class="elements__image"
+            src="./images/company.png"
+            alt="Домбай"
+          />
+          <div class="elements__mask">
+            <h2 class="elements__title">Управление замерами</h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+        <div class="elements__element">
+          <img
+            class="elements__image"
+            src="./images/company.png"
+            alt="Домбай"
+          />
+          <div class="elements__mask">
+            <h2 class="elements__title">Управление замерами</h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+        <div class="elements__element">
+          <img
+            class="elements__image"
+            src="./images/company.png"
+            alt="Домбай"
+          />
+          <div class="elements__mask">
+            <h2 class="elements__title">Управление замерами</h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+        <div class="elements__element">
+          <img
+            class="elements__image"
+            src="./images/company.png"
+            alt="Домбай"
+          />
+          <div class="elements__mask">
+            <h2 class="elements__title">Управление замерами</h2>
+            <button class="elements__like" type="button"></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="popup">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__title">Редактировать профиля</h2>
+          <form class="popup__form" action="submit">
+            <input
+              class="popup__name"
+              name="name"
+              type="text"
+              placeholder="Имя"
+              value="Survey Man"
+            />
+            <input
+              class="popup__prof"
+              name="prof"
+              type="text"
+              placeholder="Предназначение"
+              value="Инженер по замерам"
+            />
+            <button class="button button_type_submit" type="submit">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer class="footer section">
+      <p class="footer__paragraph">&copy2023 Mesto Russia</p>
+    </footer>
     <script src="./scripts/script.js"></script>
   </body>
 </html>
