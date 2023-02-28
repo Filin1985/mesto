@@ -5,7 +5,6 @@
   background-color: var(--black);
   background: url(../../../images/add.svg) center no-repeat;
   border-radius: 2px;
-  padding: 0;
 }
 
 @media screen and (max-width: 870px) {

@@ -2,6 +2,14 @@
   height: 24px;
   width: 24px;
   border: 1px solid #ffffff;
+  padding-top: 10px;
   background-color: var(--black);
   background: url(../../../images/edit.svg) no-repeat center;
+}
+
+@media screen and (max-width: 870px) {
+  .button_type_edit {
+    height: 18px;
+    width: 18px;
+  }
 }
