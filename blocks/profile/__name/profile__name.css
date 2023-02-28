@@ -3,6 +3,7 @@
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
+  padding-top: 7px;
   margin: 0;
 }
 
@@ -10,10 +11,5 @@
   .profile__name {
     font-size: 27px;
     line-height: 33px;
-  }
-}
-
-@media screen and (max-width: 560px) {
-  .profile__name {
   }
 }

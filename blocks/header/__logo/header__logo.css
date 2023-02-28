@@ -8,9 +8,7 @@
 @media screen and (max-width: 590px) {
   .header__logo {
     background: url(../../../images/logo_mini.svg) center no-repeat;
-    margin: 28px;
-    padding: 0;
-    width: 103px;
-    height: 24px;
+    margin: 25px 26px;
+    width: 105px;
   }
 }

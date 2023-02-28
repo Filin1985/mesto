@@ -10,8 +10,11 @@
 
 @media screen and (max-width: 900px) {
   .profile__prof {
-    padding-bottom: 36px;
-    padding-top: 14px;
+    padding-bottom: 32px;
+    padding-top: 8px;
+    font-size: 14px;
+    min-height: 14px;
+    line-height: 17px;
     text-align: center;
   }
 }

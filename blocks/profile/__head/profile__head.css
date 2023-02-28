@@ -1,7 +1,6 @@
 .profile__head {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 25px;
 }
 
@@ -9,6 +8,12 @@
   .profile__head {
     gap: 5px;
     width: 100%;
-    justify-content: space-around;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__head {
+    gap: 10px;
+    justify-content: right;
   }
 }
