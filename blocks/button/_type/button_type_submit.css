@@ -2,10 +2,10 @@
   background-color: var(--black);
   height: 50px;
   color: var(--white);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
+}
+
+.button_type_submit:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 560px) {
