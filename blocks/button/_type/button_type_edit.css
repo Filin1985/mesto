@@ -3,7 +3,6 @@
   width: 24px;
   border: 1px solid #ffffff;
   margin-top: 12px;
-  background-color: var(--black);
   background: url(../../../images/edit.svg) no-repeat center;
 }
 
@@ -17,5 +16,6 @@
 @media screen and (max-width: 320px) {
   .button_type_edit {
     margin-right: 20px;
+    background-image: url(../../../images/edit_mini.svg);
   }
 }
