@@ -8,6 +8,10 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.popup__item:focus {
+  outline: none;
+}
+
 @media screen and (max-width: 560px) {
   .popup__item {
     padding-bottom: 8px;
