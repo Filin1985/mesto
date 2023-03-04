@@ -115,7 +115,7 @@
         </ul>
       </section>
 
-      <section class="popup">
+      <section class="popup" id="popup-user">
         <div class="popup__container">
           <button class="button button_type_close" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
@@ -138,10 +138,62 @@
           </form>
         </div>
       </section>
+
+      <section class="popup" id="popup-card">
+        <div class="popup__container">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form name="popup" class="popup__form">
+            <input
+              class="popup__item popup__item_el_name"
+              type="text"
+              name="title"
+              placeholder="Название"
+            />
+            <input
+              class="popup__item popup__item_el_prof"
+              type="text"
+              name="address"
+              placeholder="Ссылка на картинку"
+            />
+            <button class="button button_type_submit" type="submit">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup" id="popup-image">
+        <figure class="popup__image">
+          <button class="button button_type_close" type="button"></button>
+          <img class="popup__photo" src="" alt="Изображение места" />
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+      </section>
+
+      <template id="card-template">
+        <li class="elements__element">
+          <article>
+            <img
+              class="elements__image"
+              src="./images/Karachaevsk.jpg"
+              alt="Карачаевск"
+            />
+            <button class="elements__delete" type="button"></button>
+            <div class="elements__mask">
+              <h2 class="elements__title"></h2>
+              <button
+                class="elements__like elements__like_active"
+                type="button"
+              ></button>
+            </div>
+          </article>
+        </li>
+      </template>
     </main>
     <footer class="footer section">
       <p class="footer__paragraph">&copy; 2023 Mesto Russia</p>
     </footer>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" type="module"></script>
   </body>
 </html>
