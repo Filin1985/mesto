@@ -74,7 +74,7 @@ function createNewCard(newPlace, imageSrc) {
     openPopup(popupCardImage);
     showImagePopup(imageSrc, newPlace, newPlace);
   });
-  newCard.addEventListener("click", (evt) => {
+  newCard.querySelector(".elements__like").addEventListener("click", (evt) => {
     evt.target.classList.toggle("elements__like_active");
   });
   newCard.querySelector(".elements__delete").addEventListener("click", () => {
