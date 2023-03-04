@@ -8,12 +8,19 @@ const cardsContainer = document.querySelector(".elements__list");
 
 // Селекторы popup
 const popupProfileForm = document.querySelector("#popup-user");
-const poupCardForm = document.querySelector("#popup-card");
+const poupCardWindow = document.querySelector("#popup-card");
 const popupCardImage = document.querySelector("#popup-image");
+
+// Селектор формы новой карточки
+const poupCardForm = poupCardWindow.querySelector(".popup__form");
 
 // Селекторы полей popupCardImage
 const caption = popupCardImage.querySelector(".popup__caption");
 const popupImage = popupCardImage.querySelector(".popup__photo");
+
+// Селекторы полей poupCardForm
+const newPlaceInput = poupCardForm.querySelector(".popup__item_el_name");
+const newImageInput = poupCardForm.querySelector(".popup__item_el_prof");
 
 // Селекторы полей профиля
 let nameProfile = document.querySelector(".profile__name");
@@ -86,6 +93,7 @@ function createNewCard(newPlace, imageSrc) {
 
 // Функция добавления карточки в DOM
 function appendCard(newPlace, imageSrc) {
+  console.log(imageSrc);
   const newCard = createNewCard(newPlace, imageSrc);
   cardsContainer.insertAdjacentElement("afterbegin", newCard);
 }
@@ -129,7 +137,7 @@ editProfileOpenButton.addEventListener("click", () => {
 });
 
 addCardButton.addEventListener("click", () => {
-  openPopup(poupCardForm);
+  openPopup(poupCardWindow);
 });
 
 closeButtons.forEach((button) => {
@@ -139,8 +147,15 @@ closeButtons.forEach((button) => {
   });
 });
 
-popupProfileForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+popupProfileForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
   setProfileValues(nameProfileInput.value, profProfileInput.value);
   closePopup(popupProfileForm);
+});
+
+poupCardForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  appendCard(newPlaceInput.value, newImageInput.value);
+  evt.target.reset();
+  closePopup(poupCardWindow);
 });
