@@ -23,8 +23,8 @@ const newPlaceInput = poupCardForm.querySelector(".popup__item_el_name");
 const newImageInput = poupCardForm.querySelector(".popup__item_el_prof");
 
 // Селекторы полей профиля
-let nameProfile = document.querySelector(".profile__name");
-let profProfile = document.querySelector(".profile__prof");
+const nameProfile = document.querySelector(".profile__name");
+const profProfile = document.querySelector(".profile__prof");
 
 // Селекторы полей popup профиля
 const nameProfileInput = popupProfileForm.querySelector(".popup__item_el_name");
@@ -72,7 +72,6 @@ function createNewCard(newPlace, imageSrc) {
   const newCard = newCardTemplate
     .querySelector(".elements__element")
     .cloneNode(true);
-  console.log(newCard);
   newCard.querySelector(".elements__title").textContent = newPlace;
   const newCardImage = newCard.querySelector(".elements__image");
   newCardImage.src = imageSrc;
@@ -93,7 +92,6 @@ function createNewCard(newPlace, imageSrc) {
 
 // Функция добавления карточки в DOM
 function appendCard(newPlace, imageSrc) {
-  console.log(imageSrc);
   const newCard = createNewCard(newPlace, imageSrc);
   cardsContainer.insertAdjacentElement("afterbegin", newCard);
 }
