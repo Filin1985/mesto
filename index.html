@@ -86,7 +86,7 @@
         </div>
       </section>
 
-      <section class="popup" id="popup-image">
+      <section class="popup popup_opacity_less" id="popup-image">
         <figure class="popup__image">
           <button class="button button_type_close" type="button"></button>
           <img
@@ -101,11 +101,13 @@
       <template id="card-template">
         <li class="elements__element">
           <article>
-            <img
-              class="elements__image"
-              src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
-              alt=""
-            />
+            <div class="elements__container">
+              <img
+                class="elements__image"
+                src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
+                alt=""
+              />
+            </div>
             <button class="elements__delete" type="button"></button>
             <div class="elements__mask">
               <h2 class="elements__title"></h2>
