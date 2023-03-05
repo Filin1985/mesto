@@ -76,15 +76,9 @@ function createNewCard(newPlace, imageSrc) {
   const newCardImage = newCard.querySelector(".elements__image");
   newCardImage.src = imageSrc;
   newCardImage.alt = newPlace;
-  return newCard;
-}
-
-// Функцич прикрепления события на эедементы карточки
-function createClickEventsOnCard(newCard) {
-  const imageSelector = newCard.querySelector(".elements__image");
-  newCard.querySelector(".elements__image").addEventListener("click", () => {
+  newCardImage.addEventListener("click", () => {
     openPopup(popupCardImage);
-    showImagePopup(imageSelector.src, imageSelector.alt);
+    showImagePopup(imageSrc, newPlace, newPlace);
   });
   newCard.querySelector(".elements__like").addEventListener("click", (evt) => {
     evt.target.classList.toggle("elements__like_active");
@@ -92,12 +86,13 @@ function createClickEventsOnCard(newCard) {
   newCard.querySelector(".elements__delete").addEventListener("click", () => {
     newCard.remove();
   });
+
+  return newCard;
 }
 
 // Функция добавления карточки в DOM
 function appendCard(newPlace, imageSrc) {
   const newCard = createNewCard(newPlace, imageSrc);
-  createClickEventsOnCard.call(this, newCard);
   cardsContainer.insertAdjacentElement("afterbegin", newCard);
 }
 
