@@ -78,7 +78,7 @@ function createNewCard(newPlace, imageSrc) {
   newCardImage.alt = newPlace;
   newCardImage.addEventListener("click", () => {
     openPopup(popupCardImage);
-    showImagePopup(imageSrc, newPlace, newPlace);
+    showImagePopup(imageSrc, newPlace);
   });
   newCard.querySelector(".elements__like").addEventListener("click", (evt) => {
     evt.target.classList.toggle("elements__like_active");
