@@ -136,6 +136,7 @@ function closePopupByEsc(evt) {
   if (evt.key === "Escape") {
     const popup = document.querySelector(".popup_opened");
     closePopup(popup);
+    popup.reset();
   }
 }
 
@@ -149,7 +150,6 @@ function closePopupByClickOverlay(evt) {
 
 // Функция выводящяя ошибки при валидации форм
 function showInputError(formElement, inputElement, errorMessage, obj) {
-  console.log(inputElement);
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(obj["inputErrorClass"]);
   errorElement.textContent = errorMessage;
