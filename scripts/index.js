@@ -7,6 +7,7 @@ const buttonAddCard = document.querySelector(".button_type_add");
 const cardsContainer = document.querySelector(".elements__list");
 
 // Селекторы popup
+const popups = document.querySelectorAll(".popup");
 const popupProfileForm = document.querySelector("#popup-user");
 const popopCard = document.querySelector("#popup-card");
 const popupCardImage = document.querySelector("#popup-image");
@@ -32,6 +33,15 @@ const popupProfileProf = popupProfileForm.querySelector(".popup__item_el_prof");
 
 //Селектор темплейта
 const newCardTemplate = document.querySelector("#card-template").content;
+
+const configValidation = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__item",
+  submitButtonSelector: ".button_type_submit",
+  inactiveButtonClass: "button_type_submit_disabled",
+  inputErrorClass: "popup__item_type_error",
+  errorClass: "popup__item-error_visible",
+};
 
 const initialCards = [
   {
@@ -121,6 +131,7 @@ function showImagePopup(imageSrc, text, altText) {
   popupImage.alt = altText;
 }
 
+// Функция закртия popup с помощью esc
 function closePopupByEsc(evt) {
   if (evt.key === "Escape") {
     const popup = document.querySelector(".popup_opened");
@@ -128,7 +139,95 @@ function closePopupByEsc(evt) {
   }
 }
 
+// Функция закртия popup по overlay
+function closePopupByClickOverlay(evt) {
+  if (evt.target.classList.contains("popup_opened")) {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
+}
+
+// Функция выводящяя ошибки при валидации форм
+function showInputError(formElement, inputElement, errorMessage, obj) {
+  console.log(inputElement);
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add(obj["inputErrorClass"]);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(obj["errorClass"]);
+}
+
+// Функция скрывающая ошибки при валидации форм
+function hideInputError(formElement, inputElement, obj) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(obj["inputErrorClass"]);
+  errorElement.classList.remove(obj["errorClass"]);
+  errorElement.textContent = "";
+}
+
+// Функция для проверки валидности полей
+function checkInputValidity(formElement, inputElement, obj) {
+  if (!inputElement.validity.valid) {
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      obj
+    );
+  } else {
+    hideInputError(formElement, inputElement, obj);
+  }
+}
+
+// Функция добавления обработчика всем полям формы и активации кнопки
+function setEventListener(formElement, obj) {
+  const inputList = Array.from(
+    formElement.querySelectorAll(obj["inputSelector"])
+  );
+  const buttonElement = formElement.querySelector(obj["submitButtonSelector"]);
+  toggleButtonState(inputList, buttonElement, obj);
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
+      checkInputValidity(formElement, inputElement, obj);
+      toggleButtonState(inputList, buttonElement, obj);
+    });
+  });
+}
+
+// Функция добавления обработчиков всем формам
+function enableValidation(obj) {
+  const formList = Array.from(document.querySelectorAll(obj["formSelector"]));
+  formList.forEach((formElement) => {
+    formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+    });
+    setEventListener(formElement, obj);
+  });
+}
+
+// Функция показывающая кнопке валидна ли форма
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+// Функция меняющая состояние кнопки в зависимости от валидности формы
+function toggleButtonState(inputList, buttonElement, obj) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(obj["inactiveButtonClass"]);
+  } else {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(obj["inactiveButtonClass"]);
+  }
+}
+
+enableValidation(configValidation);
 renderCards(initialCards);
+
+popups.forEach((popup) => {
+  popup.addEventListener("click", closePopupByClickOverlay);
+});
 
 buttonOpenPopupProfile.addEventListener("click", () => {
   popupProfileName.value = nameProfile.textContent;
