@@ -1,10 +1,5 @@
-.popup__item_el_prof {
-  margin-bottom: 48px;
-}
-
 @media screen and (max-width: 560px) {
   .popup__item_el_prof {
     padding-bottom: 8px;
-    margin-bottom: 45px;
   }
 }

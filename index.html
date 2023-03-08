@@ -43,21 +43,37 @@
           <button class="button button_type_close" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form" action="submit" name="profile">
-            <input
-              class="popup__item popup__item_el_name"
-              name="name"
-              type="text"
-              placeholder="Имя"
-            />
-            <input
-              class="popup__item popup__item_el_prof"
-              name="prof"
-              type="text"
-              placeholder="Предназначение"
-            />
-            <button class="button button_type_submit" type="submit">
-              Сохранить
-            </button>
+            <fieldset class="popup__set">
+              <label class="popup__field">
+                <input
+                  id="name-input"
+                  class="popup__item popup__item_el_name"
+                  name="name"
+                  minlength="2"
+                  maxlength="40"
+                  type="text"
+                  placeholder="Имя"
+                  required
+                />
+                <span class="popup__item-error name-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input
+                  id="prof-input"
+                  class="popup__item popup__item_el_prof"
+                  name="prof"
+                  type="text"
+                  minlength="2"
+                  maxlength="200"
+                  placeholder="Предназначение"
+                  required
+                />
+                <span class="popup__item-error prof-input-error"></span>
+              </label>
+              <button class="button button_type_submit" type="submit">
+                Сохранить
+              </button>
+            </fieldset>
           </form>
         </div>
       </section>
@@ -67,21 +83,36 @@
           <button class="button button_type_close" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
           <form name="popup" class="popup__form">
-            <input
-              class="popup__item popup__item_el_name"
-              type="text"
-              name="title"
-              placeholder="Название"
-            />
-            <input
-              class="popup__item popup__item_el_prof"
-              type="text"
-              name="address"
-              placeholder="Ссылка на картинку"
-            />
-            <button class="button button_type_submit" type="submit">
-              Сохранить
-            </button>
+            <fieldset class="popup__set">
+              <label class="popup__field">
+                <input
+                  id="title-input"
+                  class="popup__item popup__item_el_name"
+                  type="text"
+                  name="title"
+                  placeholder="Название"
+                  minlength="2"
+                  maxlength="30"
+                  required
+                />
+                <span class="popup__item-error title-input-error"></span>
+              </label>
+              <label class="popup__field">
+                <input
+                  id="text-input"
+                  class="popup__item popup__item_el_prof"
+                  type="url"
+                  name="address"
+                  placeholder="Ссылка на картинку"
+                  required
+                />
+                <span class="popup__item-error text-input-error"></span>
+              </label>
+
+              <button class="button button_type_submit" type="submit">
+                Сохранить
+              </button>
+            </fieldset>
           </form>
         </div>
       </section>
