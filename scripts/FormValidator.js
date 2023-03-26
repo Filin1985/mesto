@@ -1,22 +1,28 @@
 class FormValidator {
-  constructor(validationObject, formElement) {
-    this._validationObject = validationObject
-    this._formElement = formElement
+  constructor(validationConfig, formSelector) {
+    this.validationConfig = validationConfig
+    this._formElement = document.forms[formSelector]
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this.validationConfig['inputSelector'])
+    )
+    this._buttonElement = this._formElement.querySelector(
+      this.validationConfig['submitButtonSelector']
+    )
   }
 
   // Функция для добавления класса с ошибкой
   _showInputError(formElement, inputElement, errorMessage) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
-    inputElement.classList.add(this._validationObject['inputErrorClass'])
+    inputElement.classList.add(this.validationConfig['inputErrorClass'])
     errorElement.textContent = errorMessage
-    errorElement.classList.add(this._validationObject['errorClass'])
+    errorElement.classList.add(this.validationConfig['errorClass'])
   }
 
   // Функция скрывающая ошибки при валидации форм
   _hideInputError(formElement, inputElement) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
-    inputElement.classList.remove(this._validationObject['inputErrorClass'])
-    errorElement.classList.remove(this._validationObject['errorClass'])
+    inputElement.classList.remove(this.validationConfig['inputErrorClass'])
+    errorElement.classList.remove(this.validationConfig['errorClass'])
     errorElement.textContent = ''
   }
 
@@ -35,55 +41,46 @@ class FormValidator {
 
   // Функция добавления обработчика всем полям формы и активации кнопки
   _setEventListener(formElement) {
-    const inputList = Array.from(
-      formElement.querySelectorAll(this._validationObject['inputSelector'])
-    )
-    const buttonElement = formElement.querySelector(
-      this._validationObject['submitButtonSelector']
-    )
-    this._toggleButtonState(inputList, buttonElement)
+    this._toggleButtonState()
     formElement.addEventListener('reset', () => {
       setTimeout(() => {
-        this._toggleButtonState(inputList, buttonElement)
+        this._toggleButtonState()
       }, 0)
     })
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(formElement, inputElement)
-        this._toggleButtonState(inputList, buttonElement)
+        this._toggleButtonState()
       })
     })
   }
 
   // Функция добавления обработчиков всем формам
   enableValidation() {
-    const formList = Array.from(
-      document.querySelectorAll(this._validationObject['formSelector'])
-    )
-    formList.forEach((formElement) => {
-      formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault()
-      })
-      this._setEventListener(formElement)
+    this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault()
     })
+    this._setEventListener(this._formElement)
   }
 
   // Функция показывающая кнопке валидна ли форма
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid
     })
   }
 
   // Функция меняющая состояние кнопки в зависимости от валидности формы
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.disabled = true
-      buttonElement.classList.add(this._validationObject['inactiveButtonClass'])
+  _toggleButtonState() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._buttonElement.disabled = true
+      this._buttonElement.classList.add(
+        this.validationConfig['inactiveButtonClass']
+      )
     } else {
-      buttonElement.disabled = false
-      buttonElement.classList.remove(
-        this._validationObject['inactiveButtonClass']
+      this._buttonElement.disabled = false
+      this._buttonElement.classList.remove(
+        this.validationConfig['inactiveButtonClass']
       )
     }
   }
