@@ -1,4 +1,5 @@
 import { initialCards } from './data.js'
+import { openPopup, closePopup } from './utils.js'
 import FormValidator from './FormValidator.js'
 import Card from './Card.js'
 // Селекторы кнопок
@@ -29,7 +30,6 @@ const popupProfileName = popupProfileForm.querySelector('.popup__item_el_name')
 const popupProfileProf = popupProfileForm.querySelector('.popup__item_el_prof')
 
 const configValidation = {
-  formSelector: '.popup__form',
   inputSelector: '.popup__item',
   submitButtonSelector: '.button_type_submit',
   inactiveButtonClass: 'button_type_submit_disabled',
@@ -50,40 +50,14 @@ function appendCard(card) {
   cardsContainer.insertAdjacentElement('afterbegin', newCard)
 }
 
-// Функция открытия popup
-export function openPopup(popup) {
-  document.addEventListener('keydown', closePopupByEsc)
-  popup.classList.add('popup_opened')
-}
-
-// Функция закрытия popup
-function closePopup(popup) {
-  document.removeEventListener('keydown', closePopupByEsc)
-  popup.classList.remove('popup_opened')
-}
-
 // Функция редактирования профиля
 function setProfileValues(newName, newProf) {
   nameProfile.textContent = newName
   profProfile.textContent = newProf
 }
 
-// Функция закртия popup с помощью esc
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened')
-    closePopup(popup)
-  }
-}
-
-const newCardFormValidator = new FormValidator(
-  configValidation,
-  document.querySelector('#popup-card')
-)
-const profileFormValidator = new FormValidator(
-  configValidation,
-  document.querySelector('#popup-user')
-)
+const newCardFormValidator = new FormValidator(configValidation, 'card')
+const profileFormValidator = new FormValidator(configValidation, 'profile')
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
 
@@ -107,6 +81,8 @@ buttonOpenPopupProfile.addEventListener('click', () => {
 })
 
 buttonAddCard.addEventListener('click', () => {
+  popupCardPlaceInput.value = ''
+  popupCardImageInput.value = ''
   openPopup(popupCard)
 })
 
