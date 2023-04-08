@@ -14,7 +14,7 @@ export function closePopup(popup) {
   popup.classList.remove('popup_opened')
 }
 
-// Функция закртия popup с помощью esc
+// Функция закрытия popup с помощью esc
 function closePopupByEsc(evt) {
   if (evt.key === 'Escape') {
     const popup = document.querySelector('.popup_opened')

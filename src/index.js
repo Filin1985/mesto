@@ -1,7 +1,9 @@
-import { initialCards } from './data.js'
-import { openPopup, closePopup } from './utils.js'
-import FormValidator from './FormValidator.js'
-import Card from './Card.js'
+import './pages/index.css'
+
+import { initialCards } from './scripts/data.js'
+import { openPopup, closePopup } from './scripts/utils.js'
+import FormValidator from './scripts/FormValidator.js'
+import Card from './scripts/Card.js'
 // Селекторы кнопок
 const buttonOpenPopupProfile = document.querySelector('.button_type_edit')
 const buttonAddCard = document.querySelector('.button_type_add')
@@ -81,8 +83,7 @@ buttonOpenPopupProfile.addEventListener('click', () => {
 })
 
 buttonAddCard.addEventListener('click', () => {
-  popupCardPlaceInput.value = ''
-  popupCardImageInput.value = ''
+  popupCardForm.reset()
   openPopup(popupCard)
 })
 
