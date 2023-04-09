@@ -1,43 +1,39 @@
-import './pages/index.css'
+import './index.css'
 
-import { initialCards } from './scripts/data.js'
-import { openPopup, closePopup } from './scripts/utils.js'
-import FormValidator from './scripts/FormValidator.js'
-import Card from './scripts/Card.js'
-// Селекторы кнопок
-const buttonOpenPopupProfile = document.querySelector('.button_type_edit')
-const buttonAddCard = document.querySelector('.button_type_add')
+import { initialCards } from '../utils/data.js'
+import { openPopup, closePopup } from '../utils/utils.js'
+import FormValidator from '../components/FormValidator.js'
+import Card from '../components/Card.js'
+import Section from '../components/Section'
+import {
+  buttonOpenPopupProfile,
+  buttonAddCard,
+  cardsContainer,
+  popups,
+  popupProfileForm,
+  popupCard,
+  popupCardForm,
+  popupCardPlaceInput,
+  popupCardImageInput,
+  nameProfile,
+  profProfile,
+  popupProfileName,
+  popupProfileProf,
+  configValidation,
+} from '../utils/constants.js'
 
-// Селектор контейнар для карточек
-const cardsContainer = document.querySelector('.elements__list')
+const cardsList = new Section(
+  {
+    data: initialCards,
+    renderer: (cardItem) => {
+      const newCard = new Card(cardItem, '#card-template').generateCard()
+      cardsList.addItem(newCard)
+    },
+  },
+  '.elements__list'
+)
 
-// Селекторы popup
-const popups = document.querySelectorAll('.popup')
-const popupProfileForm = document.querySelector('#popup-user')
-const popupCard = document.querySelector('#popup-card')
-
-// Селектор формы новой карточки
-const popupCardForm = popupCard.querySelector('.popup__form')
-
-// Селекторы полей poupCardForm
-const popupCardPlaceInput = popupCardForm.querySelector('.popup__item_el_name')
-const popupCardImageInput = popupCardForm.querySelector('.popup__item_el_prof')
-
-// Селекторы полей профиля
-const nameProfile = document.querySelector('.profile__name')
-const profProfile = document.querySelector('.profile__prof')
-
-// Селекторы полей popup профиля
-const popupProfileName = popupProfileForm.querySelector('.popup__item_el_name')
-const popupProfileProf = popupProfileForm.querySelector('.popup__item_el_prof')
-
-const configValidation = {
-  inputSelector: '.popup__item',
-  submitButtonSelector: '.button_type_submit',
-  inactiveButtonClass: 'button_type_submit_disabled',
-  inputErrorClass: 'popup__item_type_error',
-  errorClass: 'popup__item-error_visible',
-}
+cardsList.renderItems()
 
 // Функция первоначальной загрузки данных
 function renderCards(initialCards) {
@@ -63,7 +59,7 @@ const profileFormValidator = new FormValidator(configValidation, 'profile')
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
 
-renderCards(initialCards)
+// renderCards(initialCards)
 
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
