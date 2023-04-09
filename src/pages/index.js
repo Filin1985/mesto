@@ -11,6 +11,11 @@ import {
   buttonAddCard,
   cardsContainer,
   configValidation,
+  cardTemplateSelector,
+  elementsListSelector,
+  userPopupSelector,
+  cardPopupSelector,
+  imagePopupSelector,
 } from '../utils/constants.js'
 
 const cardsList = new Section(
@@ -23,18 +28,18 @@ const cardsList = new Section(
           handleCardClick: () => {
             const imagePopup = new PopupWithImage(
               { data: cardItem },
-              '#popup-image'
+              imagePopupSelector
             )
             imagePopup.setEventListeners()
             imagePopup.open()
           },
         },
-        '#card-template'
+        cardTemplateSelector
       ).generateCard()
       cardsList.addItem(newCard)
     },
   },
-  '.elements__list'
+  elementsListSelector
 )
 
 cardsList.renderItems()
@@ -55,7 +60,7 @@ const popupProfileForm = new PopupWithForm(
       userInstance.setUserInfo(formData['name'], formData['prof'])
     },
   },
-  '#popup-user'
+  userPopupSelector
 )
 popupProfileForm.setEventListeners()
 
@@ -81,18 +86,18 @@ const cardForm = new PopupWithForm(
           handleCardClick: () => {
             const imagePopup = new PopupWithImage(
               { data: formData },
-              '#popup-image'
+              imagePopupSelector
             )
             imagePopup.setEventListeners()
             imagePopup.open()
           },
         },
-        '#card-template'
+        cardTemplateSelector
       ).generateCard()
       cardsContainer.insertAdjacentElement('afterbegin', newCard)
     },
   },
-  '#popup-card'
+  cardPopupSelector
 )
 cardForm.setEventListeners()
 
