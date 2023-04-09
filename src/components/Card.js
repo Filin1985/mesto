@@ -1,15 +1,9 @@
-import { openPopup } from './utils.js'
-
-// Селекторы полей popupCardImage
-const popupCardImage = document.querySelector('#popup-image')
-const caption = popupCardImage.querySelector('.popup__caption')
-const popupImage = popupCardImage.querySelector('.popup__photo')
-
-class Card {
-  constructor(data, templateSelector) {
+export default class Card {
+  constructor({ data, handleCardClick }, templateSelector) {
     this._name = data.name
     this._link = data.link
     this._templateSelector = templateSelector
+    this._handleCardClick = handleCardClick
   }
 
   _getTemplate() {
@@ -24,8 +18,7 @@ class Card {
     this._element
       .querySelector('.elements__image')
       .addEventListener('click', () => {
-        openPopup(popupCardImage)
-        this._showImagePopup(this._link, this._name)
+        this._handleCardClick()
       })
     this._element
       .querySelector('.elements__like')
@@ -39,13 +32,6 @@ class Card {
       })
   }
 
-  // Функция присваивающая значение полям popupImage
-  _showImagePopup(imageSrc, text, altText) {
-    caption.textContent = text
-    popupImage.src = imageSrc
-    popupImage.alt = altText
-  }
-
   generateCard() {
     this._element = this._getTemplate()
     this._element.querySelector('.elements__title').textContent = this._name
@@ -56,5 +42,3 @@ class Card {
     return this._element
   }
 }
-
-export default Card

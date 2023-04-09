@@ -13,7 +13,6 @@
     />
     <meta name="author" content="Marat Ikhsanov" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="pages/index.css" />
   </head>
   <body class="page">
     <header class="header">
@@ -21,7 +20,11 @@
     </header>
     <main class="content">
       <section class="profile section">
-        <img class="profile__avatar" src="./images/Avatar.jpg" alt="Аватар" />
+        <img
+          class="profile__avatar"
+          src="<%=require('../images/Avatar.jpg')%>"
+          alt="Аватар"
+        />
         <div class="profile__container">
           <div class="profile__info">
             <div class="profile__head">
@@ -89,7 +92,7 @@
                   id="title-input"
                   class="popup__item popup__item_el_name"
                   type="text"
-                  name="title"
+                  name="name"
                   placeholder="Название"
                   minlength="2"
                   maxlength="30"
@@ -102,7 +105,7 @@
                   id="text-input"
                   class="popup__item popup__item_el_prof"
                   type="url"
-                  name="address"
+                  name="link"
                   placeholder="Ссылка на картинку"
                   required
                 />
@@ -151,6 +154,5 @@
     <footer class="footer section">
       <p class="footer__paragraph">&copy; 2023 Mesto Russia</p>
     </footer>
-    <script src="./scripts/index.js" type="module"></script>
   </body>
 </html>
