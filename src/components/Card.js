@@ -1,4 +1,4 @@
-import { openPopup } from './utils.js'
+import { openPopup } from '../utils/utils.js'
 
 // Селекторы полей popupCardImage
 const popupCardImage = document.querySelector('#popup-image')
