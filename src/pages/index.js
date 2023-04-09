@@ -5,6 +5,7 @@ import { openPopup, closePopup } from '../utils/utils.js'
 import FormValidator from '../components/FormValidator.js'
 import Card from '../components/Card.js'
 import Section from '../components/Section'
+import PopupWithImage from '../components/PopupWithImage'
 import {
   buttonOpenPopupProfile,
   buttonAddCard,
@@ -26,7 +27,20 @@ const cardsList = new Section(
   {
     data: initialCards,
     renderer: (cardItem) => {
-      const newCard = new Card(cardItem, '#card-template').generateCard()
+      const newCard = new Card(
+        {
+          data: cardItem,
+          handleCardClick: () => {
+            const imagePopup = new PopupWithImage(
+              { data: cardItem },
+              '#popup-image'
+            )
+            imagePopup.setEventListeners()
+            imagePopup.open()
+          },
+        },
+        '#card-template'
+      ).generateCard()
       cardsList.addItem(newCard)
     },
   },
@@ -35,16 +49,12 @@ const cardsList = new Section(
 
 cardsList.renderItems()
 
-// Функция первоначальной загрузки данных
-function renderCards(initialCards) {
-  initialCards.map((card) => {
-    appendCard(card)
-  })
-}
-
 // Функция добавления карточки в DOM
 function appendCard(card) {
-  const newCard = new Card(card, '#card-template').generateCard()
+  const newCard = new Card(
+    { data: card, handleCardClick: () => {} },
+    '#card-template'
+  ).generateCard()
   cardsContainer.insertAdjacentElement('afterbegin', newCard)
 }
 
@@ -58,8 +68,6 @@ const newCardFormValidator = new FormValidator(configValidation, 'card')
 const profileFormValidator = new FormValidator(configValidation, 'profile')
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
-
-// renderCards(initialCards)
 
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
