@@ -1,25 +1,15 @@
 import './index.css'
-
 import { initialCards } from '../utils/data.js'
-import { openPopup, closePopup } from '../utils/utils.js'
 import FormValidator from '../components/FormValidator.js'
 import Card from '../components/Card.js'
 import Section from '../components/Section'
 import PopupWithImage from '../components/PopupWithImage'
+import PopupWithForm from '../components/PopupWithForm'
+import UserInfo from '../components/UserInfo'
 import {
   buttonOpenPopupProfile,
   buttonAddCard,
   cardsContainer,
-  popups,
-  popupProfileForm,
-  popupCard,
-  popupCardForm,
-  popupCardPlaceInput,
-  popupCardImageInput,
-  nameProfile,
-  profProfile,
-  popupProfileName,
-  popupProfileProf,
   configValidation,
 } from '../utils/constants.js'
 
@@ -49,60 +39,63 @@ const cardsList = new Section(
 
 cardsList.renderItems()
 
-// Функция добавления карточки в DOM
-function appendCard(card) {
-  const newCard = new Card(
-    { data: card, handleCardClick: () => {} },
-    '#card-template'
-  ).generateCard()
-  cardsContainer.insertAdjacentElement('afterbegin', newCard)
-}
-
-// Функция редактирования профиля
-function setProfileValues(newName, newProf) {
-  nameProfile.textContent = newName
-  profProfile.textContent = newProf
-}
-
 const newCardFormValidator = new FormValidator(configValidation, 'card')
 const profileFormValidator = new FormValidator(configValidation, 'profile')
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
 
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('button_type_close')) {
-      closePopup(popup)
-    }
-  })
+const userInstance = new UserInfo({
+  nameSelector: '.profile__name',
+  professionSelector: '.profile__prof',
 })
+
+const popupProfileForm = new PopupWithForm(
+  {
+    handleSubmitForm: (formData) => {
+      userInstance.setUserInfo(formData['name'], formData['prof'])
+    },
+  },
+  '#popup-user'
+)
+popupProfileForm.setEventListeners()
 
 buttonOpenPopupProfile.addEventListener('click', () => {
-  popupProfileName.value = nameProfile.textContent
-  popupProfileProf.value = profProfile.textContent
-  openPopup(popupProfileForm)
+  const { name, profession } = userInstance.getUserInfo()
+  popupProfileForm.setInputValues(
+    {
+      nameSelector: '#name-input',
+      professionSelector: '#prof-input',
+    },
+    name,
+    profession
+  )
+  popupProfileForm.open()
 })
+
+const cardForm = new PopupWithForm(
+  {
+    handleSubmitForm: (formData) => {
+      const newCard = new Card(
+        {
+          data: formData,
+          handleCardClick: () => {
+            const imagePopup = new PopupWithImage(
+              { data: formData },
+              '#popup-image'
+            )
+            imagePopup.setEventListeners()
+            imagePopup.open()
+          },
+        },
+        '#card-template'
+      ).generateCard()
+      cardsContainer.insertAdjacentElement('afterbegin', newCard)
+    },
+  },
+  '#popup-card'
+)
+cardForm.setEventListeners()
 
 buttonAddCard.addEventListener('click', () => {
-  popupCardForm.reset()
-  openPopup(popupCard)
-})
-
-popupProfileForm.addEventListener('submit', (evt) => {
-  evt.preventDefault()
-  setProfileValues(popupProfileName.value, popupProfileProf.value)
-  closePopup(popupProfileForm)
-})
-
-popupCardForm.addEventListener('submit', (evt) => {
-  evt.preventDefault()
-  appendCard({
-    name: popupCardPlaceInput.value,
-    link: popupCardImageInput.value,
-  })
-  closePopup(popupCard)
-  evt.target.reset()
+  cardForm.open()
 })

@@ -1,9 +1,4 @@
-// Селекторы полей popupCardImage
-const popupCardImage = document.querySelector('#popup-image')
-const caption = popupCardImage.querySelector('.popup__caption')
-const popupImage = popupCardImage.querySelector('.popup__photo')
-
-class Card {
+export default class Card {
   constructor({ data, handleCardClick }, templateSelector) {
     this._name = data.name
     this._link = data.link
@@ -47,5 +42,3 @@ class Card {
     return this._element
   }
 }
-
-export default Card
