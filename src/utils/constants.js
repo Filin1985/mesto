@@ -9,6 +9,12 @@ export const cardsContainer = document.querySelector('.elements__list')
 // Селекторы popup
 export const popupProfileForm = document.querySelector('#popup-user')
 
+export const cardTemplateSelector = '#card-template'
+export const userPopupSelector = '#popup-user'
+export const cardPopupSelector = '#popup-card'
+export const imagePopupSelector = '#popup-image'
+export const elementsListSelector = '.elements__list'
+
 export const configValidation = {
   inputSelector: '.popup__item',
   submitButtonSelector: '.button_type_submit',
