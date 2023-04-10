@@ -6,10 +6,6 @@ export default class Popup {
 
   open() {
     document.addEventListener('keydown', this._handleEscClose)
-    const errorElement = this._popup.querySelectorAll('.popup__item-error')
-    errorElement.forEach((element) => {
-      element.textContent = ''
-    })
     this._popup.classList.add('popup_opened')
   }
 

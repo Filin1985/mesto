@@ -29,7 +29,11 @@
           <div class="profile__info">
             <div class="profile__head">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <button class="button button_type_edit" type="button"></button>
+              <button
+                aria-label="Edit"
+                class="button button_type_edit"
+                type="button"
+              ></button>
             </div>
             <p class="profile__prof">Исследователь океана</p>
           </div>
@@ -43,7 +47,11 @@
 
       <section class="popup" id="popup-user">
         <div class="popup__container">
-          <button class="button button_type_close" type="button"></button>
+          <button
+            aria-label="Close"
+            class="button button_type_close"
+            type="button"
+          ></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form" action="submit" name="profile">
             <fieldset class="popup__set">
@@ -83,7 +91,11 @@
 
       <section class="popup" id="popup-card">
         <div class="popup__container">
-          <button class="button button_type_close" type="button"></button>
+          <button
+            aria-label="Close"
+            class="button button_type_close"
+            type="button"
+          ></button>
           <h2 class="popup__title">Новое место</h2>
           <form name="card" class="popup__form">
             <fieldset class="popup__set">
@@ -122,7 +134,11 @@
 
       <section class="popup popup_opacity_less" id="popup-image">
         <figure class="popup__image">
-          <button class="button button_type_close" type="button"></button>
+          <button
+            aria-label="Close"
+            class="button button_type_close"
+            type="button"
+          ></button>
           <img
             class="popup__photo"
             src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
@@ -142,10 +158,18 @@
                 alt=""
               />
             </div>
-            <button class="elements__delete" type="button"></button>
+            <button
+              aria-label="Delete"
+              class="elements__delete"
+              type="button"
+            ></button>
             <div class="elements__mask">
               <h2 class="elements__title"></h2>
-              <button class="elements__like" type="button"></button>
+              <button
+                aria-label="Like"
+                class="elements__like"
+                type="button"
+              ></button>
             </div>
           </article>
         </li>

@@ -9,7 +9,6 @@ import UserInfo from '../components/UserInfo'
 import {
   buttonOpenPopupProfile,
   buttonAddCard,
-  cardsContainer,
   configValidation,
   cardTemplateSelector,
   elementsListSelector,
@@ -20,24 +19,27 @@ import {
   profileFormItem,
 } from '../utils/constants.js'
 
+const imagePopupInstance = new PopupWithImage(imagePopupSelector)
+imagePopupInstance.setEventListeners()
+
+function renderCard(cardItem) {
+  return new Card(
+    {
+      data: cardItem,
+      handleCardClick: () => {
+        imagePopupInstance.setEventListeners()
+        imagePopupInstance.open({ data: cardItem })
+      },
+    },
+    cardTemplateSelector
+  )
+}
+
 const cardsList = new Section(
   {
     data: initialCards,
     renderer: (cardItem) => {
-      const newCard = new Card(
-        {
-          data: cardItem,
-          handleCardClick: () => {
-            const imagePopup = new PopupWithImage(
-              { data: cardItem },
-              imagePopupSelector
-            )
-            imagePopup.setEventListeners()
-            imagePopup.open()
-          },
-        },
-        cardTemplateSelector
-      ).generateCard()
+      const newCard = renderCard(cardItem).generateCard()
       cardsList.addItem(newCard)
     },
   },
@@ -45,7 +47,6 @@ const cardsList = new Section(
 )
 
 cardsList.renderItems()
-
 const newCardFormValidator = new FormValidator(configValidation, cardFormItem)
 const profileFormValidator = new FormValidator(
   configValidation,
@@ -70,36 +71,17 @@ const popupProfileForm = new PopupWithForm(
 popupProfileForm.setEventListeners()
 
 buttonOpenPopupProfile.addEventListener('click', () => {
-  const { name, profession } = userInstance.getUserInfo()
-  popupProfileForm.setInputValues(
-    {
-      nameSelector: '#name-input',
-      professionSelector: '#prof-input',
-    },
-    name,
-    profession
-  )
+  const { name, prof } = userInstance.getUserInfo()
+  popupProfileForm.setInputValues({ name, prof })
+  profileFormValidator.resetInputErrors()
   popupProfileForm.open()
 })
 
 const cardForm = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
-      const newCard = new Card(
-        {
-          data: formData,
-          handleCardClick: () => {
-            const imagePopup = new PopupWithImage(
-              { data: formData },
-              imagePopupSelector
-            )
-            imagePopup.setEventListeners()
-            imagePopup.open()
-          },
-        },
-        cardTemplateSelector
-      ).generateCard()
-      cardsContainer.insertAdjacentElement('afterbegin', newCard)
+      const newCard = renderCard(formData).generateCard()
+      cardsList.addItem(newCard)
     },
   },
   cardPopupSelector
@@ -107,5 +89,6 @@ const cardForm = new PopupWithForm(
 cardForm.setEventListeners()
 
 buttonAddCard.addEventListener('click', () => {
+  newCardFormValidator.resetInputErrors()
   cardForm.open()
 })

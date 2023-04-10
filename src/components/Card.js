@@ -4,7 +4,7 @@ export default class Card {
     this._link = data.link
     this._templateSelector = templateSelector
     this._handleCardClick = handleCardClick
-    this._cardImage = this._element.querySelector('.elements__image')
+    this._cardImage
   }
 
   _getTemplate() {
@@ -12,6 +12,7 @@ export default class Card {
       .querySelector(this._templateSelector)
       .content.querySelector('.elements__element')
       .cloneNode(true)
+    this._cardImage = cardElement.querySelector('.elements__image')
     return cardElement
   }
 
