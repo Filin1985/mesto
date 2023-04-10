@@ -3,7 +3,9 @@ class FormValidator {
     this._validationConfig = validationConfig
     this._formElement = formElement
     this._inputList = Array.from(
-      this._formElement.querySelectorAll(this.validationConfig['inputSelector'])
+      this._formElement.querySelectorAll(
+        this._validationConfig['inputSelector']
+      )
     )
     this._buttonElement = this._formElement.querySelector(
       this._validationConfig['submitButtonSelector']
@@ -40,16 +42,16 @@ class FormValidator {
   }
 
   // Функция добавления обработчика всем полям формы и активации кнопки
-  _setEventListener(formElement) {
+  _setEventListener() {
     this._toggleButtonState()
-    formElement.addEventListener('reset', () => {
+    this._formElement.addEventListener('reset', () => {
       setTimeout(() => {
         this._toggleButtonState()
       }, 0)
     })
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._checkInputValidity(formElement, inputElement)
+        this._checkInputValidity(this._formElement, inputElement)
         this._toggleButtonState()
       })
     })
@@ -61,6 +63,14 @@ class FormValidator {
       evt.preventDefault()
     })
     this._setEventListener(this._formElement)
+  }
+
+  resetInputErrors() {
+    const errorElement =
+      this._formElement.querySelectorAll('.popup__item-error')
+    errorElement.forEach((element) => {
+      element.textContent = ''
+    })
   }
 
   // Функция показывающая кнопке валидна ли форма
