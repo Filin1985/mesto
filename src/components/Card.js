@@ -4,6 +4,7 @@ export default class Card {
     this._link = data.link
     this._templateSelector = templateSelector
     this._handleCardClick = handleCardClick
+    this._cardImage = this._element.querySelector('.elements__image')
   }
 
   _getTemplate() {
@@ -15,11 +16,9 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element
-      .querySelector('.elements__image')
-      .addEventListener('click', () => {
-        this._handleCardClick()
-      })
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick()
+    })
     this._element
       .querySelector('.elements__like')
       .addEventListener('click', (evt) => {
@@ -35,9 +34,8 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate()
     this._element.querySelector('.elements__title').textContent = this._name
-    const newCardImage = this._element.querySelector('.elements__image')
-    newCardImage.src = this._link
-    newCardImage.alt = this._name
+    this._cardImage.src = this._link
+    this._cardImage.alt = this._name
     this._setEventListeners()
     return this._element
   }

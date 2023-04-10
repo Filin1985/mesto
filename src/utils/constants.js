@@ -15,6 +15,9 @@ export const cardPopupSelector = '#popup-card'
 export const imagePopupSelector = '#popup-image'
 export const elementsListSelector = '.elements__list'
 
+export const cardFormItem = document.forms['card']
+export const profileFormItem = document.forms['profile']
+
 export const configValidation = {
   inputSelector: '.popup__item',
   submitButtonSelector: '.button_type_submit',
