@@ -16,6 +16,8 @@ import {
   userPopupSelector,
   cardPopupSelector,
   imagePopupSelector,
+  cardFormItem,
+  profileFormItem,
 } from '../utils/constants.js'
 
 const cardsList = new Section(
@@ -44,8 +46,11 @@ const cardsList = new Section(
 
 cardsList.renderItems()
 
-const newCardFormValidator = new FormValidator(configValidation, 'card')
-const profileFormValidator = new FormValidator(configValidation, 'profile')
+const newCardFormValidator = new FormValidator(configValidation, cardFormItem)
+const profileFormValidator = new FormValidator(
+  configValidation,
+  profileFormItem
+)
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
 
