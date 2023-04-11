@@ -23,24 +23,23 @@ const imagePopupInstance = new PopupWithImage(imagePopupSelector)
 imagePopupInstance.setEventListeners()
 
 function renderCard(cardItem) {
-  return new Card(
+  const newCard = new Card(
     {
       data: cardItem,
       handleCardClick: () => {
-        imagePopupInstance.setEventListeners()
         imagePopupInstance.open({ data: cardItem })
       },
     },
     cardTemplateSelector
-  )
+  ).generateCard()
+  cardsList.addItem(newCard)
 }
 
 const cardsList = new Section(
   {
     data: initialCards,
     renderer: (cardItem) => {
-      const newCard = renderCard(cardItem).generateCard()
-      cardsList.addItem(newCard)
+      renderCard(cardItem)
     },
   },
   elementsListSelector
@@ -80,8 +79,7 @@ buttonOpenPopupProfile.addEventListener('click', () => {
 const cardForm = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
-      const newCard = renderCard(formData).generateCard()
-      cardsList.addItem(newCard)
+      renderCard(formData)
     },
   },
   cardPopupSelector
