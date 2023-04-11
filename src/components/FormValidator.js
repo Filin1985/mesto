@@ -13,31 +13,31 @@ class FormValidator {
   }
 
   // Функция для добавления класса с ошибкой
-  _showInputError(formElement, inputElement, errorMessage) {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+  _showInputError(inputElement, errorMessage) {
+    const errorElement = this._formElement.querySelector(
+      `.${inputElement.id}-error`
+    )
     inputElement.classList.add(this._validationConfig['inputErrorClass'])
     errorElement.textContent = errorMessage
     errorElement.classList.add(this._validationConfig['errorClass'])
   }
 
   // Функция скрывающая ошибки при валидации форм
-  _hideInputError(formElement, inputElement) {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`)
+  _hideInputError(inputElement) {
+    const errorElement = this._formElement.querySelector(
+      `.${inputElement.id}-error`
+    )
     inputElement.classList.remove(this._validationConfig['inputErrorClass'])
     errorElement.classList.remove(this._validationConfig['errorClass'])
     errorElement.textContent = ''
   }
 
   // Функция для проверки валидности полей
-  _checkInputValidity(formElement, inputElement) {
+  _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
-      this._showInputError(
-        formElement,
-        inputElement,
-        inputElement.validationMessage
-      )
+      this._showInputError(inputElement, inputElement.validationMessage)
     } else {
-      this._hideInputError(formElement, inputElement)
+      this._hideInputError(inputElement)
     }
   }
 
@@ -51,7 +51,7 @@ class FormValidator {
     })
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._checkInputValidity(this._formElement, inputElement)
+        this._checkInputValidity(inputElement)
         this._toggleButtonState()
       })
     })
@@ -62,7 +62,7 @@ class FormValidator {
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault()
     })
-    this._setEventListener(this._formElement)
+    this._setEventListener()
   }
 
   resetInputErrors() {
@@ -82,7 +82,7 @@ class FormValidator {
 
   // Функция меняющая состояние кнопки в зависимости от валидности формы
   _toggleButtonState() {
-    if (this._hasInvalidInput(this._inputList)) {
+    if (this._hasInvalidInput()) {
       this._buttonElement.disabled = true
       this._buttonElement.classList.add(
         this._validationConfig['inactiveButtonClass']
