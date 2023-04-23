@@ -11,6 +11,11 @@ export default class UserInfo {
     }
   }
 
+  renderUserInfo(name, profession) {
+    this._name.textContent = name
+    this._prof.textContent = profession
+  }
+
   setUserInfo(newName, newProfession) {
     this._name.textContent = newName
     this._prof.textContent = newProfession
