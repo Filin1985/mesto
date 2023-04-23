@@ -1,5 +1,6 @@
 import './index.css'
 import { initialCards } from '../utils/data.js'
+import { api } from '../components/Api'
 import FormValidator from '../components/FormValidator.js'
 import Card from '../components/Card.js'
 import Section from '../components/Section'
@@ -22,7 +23,23 @@ import {
 const imagePopupInstance = new PopupWithImage(imagePopupSelector)
 imagePopupInstance.setEventListeners()
 
-function renderCard(cardItem) {
+Promise.all([api.getUserProfile(), api.getAllCards()])
+  .then(([userProfile, cards]) => {
+    userInstance.renderUserInfo(userProfile.name, userProfile.about)
+    const cardsList = new Section(
+      {
+        data: cards,
+        renderer: (cardItem) => {
+          renderCard(cardItem, cardsList)
+        },
+      },
+      elementsListSelector
+    )
+    cardsList.renderItems()
+  })
+  .catch((error) => console.log(error.message))
+
+function renderCard(cardItem, cardsList) {
   const newCard = new Card(
     {
       data: cardItem,
@@ -35,17 +52,6 @@ function renderCard(cardItem) {
   cardsList.addItem(newCard)
 }
 
-const cardsList = new Section(
-  {
-    data: initialCards,
-    renderer: (cardItem) => {
-      renderCard(cardItem)
-    },
-  },
-  elementsListSelector
-)
-
-cardsList.renderItems()
 const newCardFormValidator = new FormValidator(configValidation, cardFormItem)
 const profileFormValidator = new FormValidator(
   configValidation,
