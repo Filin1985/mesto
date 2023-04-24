@@ -5,15 +5,18 @@ export const popupProfileForm = document.querySelector('#popup-user')
 export const buttonSubmitProfile = popupProfileForm.querySelector(
   '.button_type_submit'
 )
-console.log(buttonSubmitProfile)
 export const cardTemplateSelector = '#card-template'
 export const userPopupSelector = '#popup-user'
 export const cardPopupSelector = '#popup-card'
+
 export const imagePopupSelector = '#popup-image'
 export const confirmPopupSelector = '#popup-confirm'
 export const elementsListSelector = '.elements__list'
 
 export const cardFormItem = document.forms['card']
+export const buttonSubmitCard = cardFormItem.querySelector(
+  '.button_type_submit'
+)
 export const profileFormItem = document.forms['profile']
 
 export const configValidation = {

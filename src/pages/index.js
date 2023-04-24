@@ -20,26 +20,29 @@ import {
   cardFormItem,
   profileFormItem,
   buttonSubmitProfile,
+  buttonSubmitCard,
 } from '../utils/constants.js'
 
 const imagePopupInstance = new PopupWithImage(imagePopupSelector)
 imagePopupInstance.setEventListeners()
 const confirmPopupInstance = new Popup(confirmPopupSelector)
 confirmPopupInstance.setEventListeners()
+export let profileId
+let cardsList
 
 Promise.all([api.getUserProfile(), api.getAllCards()])
   .then(([userProfile, cards]) => {
-    const profileId = userProfile._id
+    profileId = userProfile._id
     userInstance.renderUserInfo(
       userProfile.name,
       userProfile.about,
       userProfile.avatar
     )
-    const cardsList = new Section(
+    cardsList = new Section(
       {
         data: cards,
         renderer: (cardItem) => {
-          renderCard(cardItem, cardsList, profileId)
+          renderCard(cardItem, profileId)
         },
       },
       elementsListSelector
@@ -48,7 +51,7 @@ Promise.all([api.getUserProfile(), api.getAllCards()])
   })
   .catch((error) => console.log(error.message))
 
-function renderCard(cardItem, cardsList, profileId) {
+function renderCard(cardItem, profileId) {
   const newCard = new Card(
     {
       data: cardItem,
@@ -57,6 +60,30 @@ function renderCard(cardItem, cardsList, profileId) {
       },
       handleCardDelete: () => {
         confirmPopupInstance.open()
+      },
+      handleLike: () => {
+        const likeElement = newCard.querySelector('.elements__like')
+        const numberElement = newCard.querySelector('.elements__number')
+        console.log(numberElement)
+        if (likeElement.classList.contains('elements__like_active')) {
+          api
+            .removeLikeFromCard(cardItem._id)
+            .then((res) => {
+              numberElement.textContent = res.likes.length
+            })
+            .catch((error) => {
+              console.log(error.message)
+            })
+        } else {
+          api
+            .addLikeToCard(cardItem._id)
+            .then((res) => {
+              numberElement.textContent = res.likes.length
+            })
+            .catch((error) => {
+              console.log(error.message)
+            })
+        }
       },
     },
     cardTemplateSelector
@@ -110,7 +137,18 @@ buttonOpenPopupProfile.addEventListener('click', () => {
 const cardForm = new PopupWithForm(
   {
     handleSubmitForm: (formData) => {
-      renderCard(formData)
+      console.log(formData)
+      buttonSubmitCard.textContent = 'Сохранение...'
+      api
+        .addNewCard(formData.name, formData.link)
+        .then((res) => {
+          console.log(res)
+          renderCard(res, profileId)
+        })
+        .catch((error) => console.log(error))
+        .finally(() => {
+          buttonSubmitCard.textContent = 'Сохранить'
+        })
     },
   },
   cardPopupSelector
