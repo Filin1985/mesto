@@ -1,15 +1,16 @@
-// Селекторы кнопок
 export const buttonOpenPopupProfile =
   document.querySelector('.button_type_edit')
 export const buttonAddCard = document.querySelector('.button_type_add')
-
-// Селекторы popup
 export const popupProfileForm = document.querySelector('#popup-user')
-
+export const buttonSubmitProfile = popupProfileForm.querySelector(
+  '.button_type_submit'
+)
+console.log(buttonSubmitProfile)
 export const cardTemplateSelector = '#card-template'
 export const userPopupSelector = '#popup-user'
 export const cardPopupSelector = '#popup-card'
 export const imagePopupSelector = '#popup-image'
+export const confirmPopupSelector = '#popup-confirm'
 export const elementsListSelector = '.elements__list'
 
 export const cardFormItem = document.forms['card']

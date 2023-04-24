@@ -24,6 +24,17 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse)
   }
+
+  saveProfileData(newName, newProfession) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: newName,
+        about: newProfession,
+      }),
+    }).then(this._checkResponse)
+  }
 }
 
 export const api = new Api({
