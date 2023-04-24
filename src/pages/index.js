@@ -33,6 +33,45 @@ imagePopupInstance.setEventListeners()
 export let profileId
 let cardsList
 
+function renderCard(cardItem, profileId) {
+  const newCard = new Card(
+    {
+      data: cardItem,
+      handleCardClick: () => {
+        imagePopupInstance.open({ data: cardItem })
+      },
+      handleCardDelete: () => {
+        confirmForm.open(cardItem._id)
+      },
+      handleLike: () => {
+        const likeElement = newCard.querySelector('.elements__like')
+        const numberElement = newCard.querySelector('.elements__number')
+        if (likeElement.classList.contains('elements__like_active')) {
+          api
+            .removeLikeFromCard(cardItem._id)
+            .then((res) => {
+              numberElement.textContent = res.likes.length
+            })
+            .catch((error) => {
+              console.log(error.message)
+            })
+        } else {
+          api
+            .addLikeToCard(cardItem._id)
+            .then((res) => {
+              numberElement.textContent = res.likes.length
+            })
+            .catch((error) => {
+              console.log(error.message)
+            })
+        }
+      },
+    },
+    cardTemplateSelector
+  ).generateCard(profileId)
+  cardsList.addItem(newCard)
+}
+
 Promise.all([api.getUserProfile(), api.getAllCards()])
   .then(([userProfile, cards]) => {
     profileId = userProfile._id
@@ -73,45 +112,6 @@ const confirmForm = new PopupConfirm(
 )
 confirmForm.setEventListeners()
 
-function renderCard(cardItem, profileId) {
-  const newCard = new Card(
-    {
-      data: cardItem,
-      handleCardClick: () => {
-        imagePopupInstance.open({ data: cardItem })
-      },
-      handleCardDelete: () => {
-        confirmForm.open(cardItem._id)
-      },
-      handleLike: () => {
-        const likeElement = newCard.querySelector('.elements__like')
-        const numberElement = newCard.querySelector('.elements__number')
-        if (likeElement.classList.contains('elements__like_active')) {
-          api
-            .removeLikeFromCard(cardItem._id)
-            .then((res) => {
-              numberElement.textContent = res.likes.length
-            })
-            .catch((error) => {
-              console.log(error.message)
-            })
-        } else {
-          api
-            .addLikeToCard(cardItem._id)
-            .then((res) => {
-              numberElement.textContent = res.likes.length
-            })
-            .catch((error) => {
-              console.log(error.message)
-            })
-        }
-      },
-    },
-    cardTemplateSelector
-  ).generateCard(profileId)
-  cardsList.addItem(newCard)
-}
-
 const newCardFormValidator = new FormValidator(configValidation, cardFormItem)
 const profileFormValidator = new FormValidator(
   configValidation,
@@ -121,6 +121,8 @@ const avatarFormValidation = new FormValidator(configValidation, avatarFormItem)
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
 avatarFormValidation.enableValidation()
+console.log(newCardFormValidator)
+console.log(avatarFormValidation)
 
 const userInstance = new UserInfo({
   nameSelector: '.profile__name',
@@ -182,7 +184,7 @@ const avatarForm = new PopupWithForm(
     handleSubmitForm: (formData) => {
       buttonSubmitAvatar.textContent = 'Сохранение...'
       api
-        .editAvatar(formData.link)
+        .editAvatar(formData.avatar)
         .then((res) => {
           userInstance.renderUserInfo(res.name, res.about, res.avatar)
         })
