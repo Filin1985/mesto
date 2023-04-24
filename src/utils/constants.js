@@ -11,9 +11,14 @@ export const cardPopupSelector = '#popup-card'
 
 export const imagePopupSelector = '#popup-image'
 export const confirmPopupSelector = '#popup-confirm'
+
 export const elementsListSelector = '.elements__list'
 
 export const cardFormItem = document.forms['card']
+export const confirmFormItem = document.forms['confirm']
+export const buttonDeleteCard = confirmFormItem.querySelector(
+  '.button_type_submit'
+)
 export const buttonSubmitCard = cardFormItem.querySelector(
   '.button_type_submit'
 )
