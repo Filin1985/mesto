@@ -10,9 +10,3 @@
 .profile__avatar:hover {
   opacity: 0.2;
 }
-
-@media screen and (max-width: 1040px) {
-  .profile__avatar {
-    margin-top: 45px;
-  }
-}

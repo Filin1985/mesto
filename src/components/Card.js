@@ -33,8 +33,10 @@ export default class Card {
     this._element
       .querySelector('.elements__like')
       .addEventListener('click', (evt) => {
-        this._handleLike()
-        evt.target.classList.toggle('elements__like_active')
+        this._handleLike(
+          this._element.querySelector('.elements__like'),
+          this._element.querySelector('.elements__number')
+        )
       })
     this._element
       .querySelector('.elements__delete')
