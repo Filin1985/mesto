@@ -41,16 +41,15 @@ function renderCard(cardItem, profileId) {
         imagePopupInstance.open({ data: cardItem })
       },
       handleCardDelete: () => {
-        confirmForm.open(cardItem._id)
+        confirmForm.open(newCard)
       },
-      handleLike: () => {
-        const likeElement = newCard.querySelector('.elements__like')
-        const numberElement = newCard.querySelector('.elements__number')
+      handleLike: (likeElement, numberElement) => {
         if (likeElement.classList.contains('elements__like_active')) {
           api
             .removeLikeFromCard(cardItem._id)
             .then((res) => {
               numberElement.textContent = res.likes.length
+              likeElement.classList.remove('elements__like_active')
             })
             .catch((error) => {
               console.log(error.message)
@@ -60,6 +59,7 @@ function renderCard(cardItem, profileId) {
             .addLikeToCard(cardItem._id)
             .then((res) => {
               numberElement.textContent = res.likes.length
+              likeElement.classList.add('elements__like_active')
             })
             .catch((error) => {
               console.log(error.message)
@@ -95,15 +95,16 @@ Promise.all([api.getUserProfile(), api.getAllCards()])
 
 const confirmForm = new PopupConfirm(
   {
-    handleSubmitForm: (cardId) => {
+    handleSubmitForm: (card) => {
       buttonDeleteCard.textContent = 'Удаление...'
       api
-        .deleteCard(cardId)
+        .deleteCard(card.id)
         .then((res) => {
-          document.getElementById(cardId).remove()
+          card.remove()
         })
         .catch((error) => console.log(error))
         .finally(() => {
+          confirmForm.close()
           buttonDeleteCard.textContent = 'Да'
         })
     },
@@ -121,8 +122,6 @@ const avatarFormValidation = new FormValidator(configValidation, avatarFormItem)
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
 avatarFormValidation.enableValidation()
-console.log(newCardFormValidator)
-console.log(avatarFormValidation)
 
 const userInstance = new UserInfo({
   nameSelector: '.profile__name',
@@ -143,6 +142,7 @@ const popupProfileForm = new PopupWithForm(
           console.log(error.message)
         })
         .finally(() => {
+          console.log('object')
           popupProfileForm.close()
           buttonSubmitProfile.textContent = 'Сохранить'
         })
@@ -168,6 +168,7 @@ const cardForm = new PopupWithForm(
         .addNewCard(formData.name, formData.link)
         .then((res) => {
           renderCard(res, profileId)
+          cardForm.close()
         })
         .catch((error) => console.log(error))
         .finally(() => {
@@ -187,6 +188,7 @@ const avatarForm = new PopupWithForm(
         .editAvatar(formData.avatar)
         .then((res) => {
           userInstance.renderUserInfo(res.name, res.about, res.avatar)
+          avatarForm.close()
         })
         .catch((error) => console.log(error))
         .finally(() => {
