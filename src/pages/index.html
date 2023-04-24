@@ -20,11 +20,13 @@
     </header>
     <main class="content">
       <section class="profile section">
-        <img
-          class="profile__avatar"
-          src="<%=require('../images/Avatar.jpg')%>"
-          alt="Аватар"
-        />
+        <div class="profile__image">
+          <img
+            class="profile__avatar"
+            src="<%=require('../images/Avatar.jpg')%>"
+            alt="Аватар"
+          />
+        </div>
         <div class="profile__container">
           <div class="profile__info">
             <div class="profile__head">
@@ -148,6 +150,53 @@
         </figure>
       </section>
 
+      <section class="popup" id="popup-confirm">
+        <div class="popup__container">
+          <button
+            aria-label="Close"
+            class="button button_type_close"
+            type="button"
+          ></button>
+          <h2 class="popup__title popup__title_padding_less">Вы уверены?</h2>
+          <form name="confirm" class="popup__form">
+            <fieldset class="popup__set">
+              <button class="button button_type_submit" type="submit">
+                Да
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup" id="popup-avatar">
+        <div class="popup__container">
+          <button
+            aria-label="Close"
+            class="button button_type_close"
+            type="button"
+          ></button>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <form name="avatar" class="popup__form">
+            <fieldset class="popup__set">
+              <label class="popup__field">
+                <input
+                  id="text-input"
+                  class="popup__item popup__item_el_prof"
+                  type="url"
+                  name="link"
+                  placeholder="Ссылка на картинку"
+                  required
+                />
+                <span class="popup__item-error text-input-error"></span>
+              </label>
+              <button class="button button_type_submit" type="submit" disabled>
+                Сохранить
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+
       <template id="card-template">
         <li class="elements__element">
           <article>
@@ -165,11 +214,14 @@
             ></button>
             <div class="elements__mask">
               <h2 class="elements__title"></h2>
-              <button
-                aria-label="Like"
-                class="elements__like"
-                type="button"
-              ></button>
+              <div class="elements__likes">
+                <button
+                  aria-label="Like"
+                  class="elements__like"
+                  type="button"
+                ></button>
+                <p class="elements__number">0</p>
+              </div>
             </div>
           </article>
         </li>
