@@ -5,6 +5,7 @@ import Card from '../components/Card.js'
 import Section from '../components/Section'
 import PopupWithImage from '../components/PopupWithImage'
 import PopupWithForm from '../components/PopupWithForm'
+import PopupConfirm from '../components/PopupConfirm'
 import Popup from '../components/Popup'
 import UserInfo from '../components/UserInfo'
 import {
@@ -21,12 +22,11 @@ import {
   profileFormItem,
   buttonSubmitProfile,
   buttonSubmitCard,
+  buttonDeleteCard,
 } from '../utils/constants.js'
 
 const imagePopupInstance = new PopupWithImage(imagePopupSelector)
 imagePopupInstance.setEventListeners()
-const confirmPopupInstance = new Popup(confirmPopupSelector)
-confirmPopupInstance.setEventListeners()
 export let profileId
 let cardsList
 
@@ -40,7 +40,7 @@ Promise.all([api.getUserProfile(), api.getAllCards()])
     )
     cardsList = new Section(
       {
-        data: cards,
+        data: cards.reverse(),
         renderer: (cardItem) => {
           renderCard(cardItem, profileId)
         },
@@ -51,6 +51,26 @@ Promise.all([api.getUserProfile(), api.getAllCards()])
   })
   .catch((error) => console.log(error.message))
 
+const confirmForm = new PopupConfirm(
+  {
+    handleSubmitForm: (cardId) => {
+      buttonDeleteCard.textContent = 'Удаление...'
+      api
+        .deleteCard(cardId)
+        .then((res) => {
+          console.log(res)
+          document.getElementById(cardId).remove()
+        })
+        .catch((error) => console.log(error))
+        .finally(() => {
+          buttonDeleteCard.textContent = 'Да'
+        })
+    },
+  },
+  confirmPopupSelector
+)
+confirmForm.setEventListeners()
+
 function renderCard(cardItem, profileId) {
   const newCard = new Card(
     {
@@ -59,12 +79,11 @@ function renderCard(cardItem, profileId) {
         imagePopupInstance.open({ data: cardItem })
       },
       handleCardDelete: () => {
-        confirmPopupInstance.open()
+        confirmForm.open(cardItem._id)
       },
       handleLike: () => {
         const likeElement = newCard.querySelector('.elements__like')
         const numberElement = newCard.querySelector('.elements__number')
-        console.log(numberElement)
         if (likeElement.classList.contains('elements__like_active')) {
           api
             .removeLikeFromCard(cardItem._id)
