@@ -35,6 +35,31 @@ class Api {
       }),
     }).then(this._checkResponse)
   }
+
+  addNewCard(name, link) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    }).then(this._checkResponse)
+  }
+
+  addLikeToCard(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers,
+    }).then(this._checkResponse)
+  }
+
+  removeLikeFromCard(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then(this._checkResponse)
+  }
 }
 
 export const api = new Api({
