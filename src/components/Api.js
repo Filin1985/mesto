@@ -67,6 +67,16 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse)
   }
+
+  editAvatar(avatar) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar,
+      }),
+    }).then(this._checkResponse)
+  }
 }
 
 export const api = new Api({

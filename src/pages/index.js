@@ -6,7 +6,6 @@ import Section from '../components/Section'
 import PopupWithImage from '../components/PopupWithImage'
 import PopupWithForm from '../components/PopupWithForm'
 import PopupConfirm from '../components/PopupConfirm'
-import Popup from '../components/Popup'
 import UserInfo from '../components/UserInfo'
 import {
   buttonOpenPopupProfile,
@@ -23,6 +22,10 @@ import {
   buttonSubmitProfile,
   buttonSubmitCard,
   buttonDeleteCard,
+  avatarPopupSelector,
+  avatarFormItem,
+  buttonSubmitAvatar,
+  buttonEditAvatar,
 } from '../utils/constants.js'
 
 const imagePopupInstance = new PopupWithImage(imagePopupSelector)
@@ -58,7 +61,6 @@ const confirmForm = new PopupConfirm(
       api
         .deleteCard(cardId)
         .then((res) => {
-          console.log(res)
           document.getElementById(cardId).remove()
         })
         .catch((error) => console.log(error))
@@ -115,13 +117,15 @@ const profileFormValidator = new FormValidator(
   configValidation,
   profileFormItem
 )
+const avatarFormValidation = new FormValidator(configValidation, avatarFormItem)
 newCardFormValidator.enableValidation()
 profileFormValidator.enableValidation()
+avatarFormValidation.enableValidation()
 
 const userInstance = new UserInfo({
   nameSelector: '.profile__name',
   professionSelector: '.profile__prof',
-  avatar: '.profile__avatar',
+  avatarSelector: '.profile__avatar',
 })
 
 const popupProfileForm = new PopupWithForm(
@@ -161,7 +165,6 @@ const cardForm = new PopupWithForm(
       api
         .addNewCard(formData.name, formData.link)
         .then((res) => {
-          console.log(res)
           renderCard(res, profileId)
         })
         .catch((error) => console.log(error))
@@ -174,7 +177,31 @@ const cardForm = new PopupWithForm(
 )
 cardForm.setEventListeners()
 
+const avatarForm = new PopupWithForm(
+  {
+    handleSubmitForm: (formData) => {
+      buttonSubmitAvatar.textContent = 'Сохранение...'
+      api
+        .editAvatar(formData.link)
+        .then((res) => {
+          userInstance.renderUserInfo(res.name, res.about, res.avatar)
+        })
+        .catch((error) => console.log(error))
+        .finally(() => {
+          buttonSubmitAvatar.textContent = 'Сохранить'
+        })
+    },
+  },
+  avatarPopupSelector
+)
+avatarForm.setEventListeners()
+
 buttonAddCard.addEventListener('click', () => {
   newCardFormValidator.resetInputErrors()
   cardForm.open()
+})
+
+buttonEditAvatar.addEventListener('click', () => {
+  avatarFormValidation.resetInputErrors()
+  avatarForm.open()
 })

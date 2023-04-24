@@ -1,14 +1,12 @@
-.profile__avatar {
+.profile__image {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
   cursor: pointer;
-  z-index: 0;
+  border-radius: 50%;
 }
 
-.profile__avatar:hover {
-  opacity: 0.2;
+.profile__image:hover {
+  background: url(../../../images/editAvatar.svg) center no-repeat;
 }
 
 @media screen and (max-width: 1040px) {
