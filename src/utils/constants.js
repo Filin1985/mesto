@@ -8,6 +8,7 @@ export const buttonSubmitProfile = popupProfileForm.querySelector(
 export const cardTemplateSelector = '#card-template'
 export const userPopupSelector = '#popup-user'
 export const cardPopupSelector = '#popup-card'
+export const avatarPopupSelector = '#popup-avatar'
 
 export const imagePopupSelector = '#popup-image'
 export const confirmPopupSelector = '#popup-confirm'
@@ -23,6 +24,12 @@ export const buttonSubmitCard = cardFormItem.querySelector(
   '.button_type_submit'
 )
 export const profileFormItem = document.forms['profile']
+export const avatarFormItem = document.forms['avatar']
+export const buttonSubmitAvatar = avatarFormItem.querySelector(
+  '.button_type_submit'
+)
+
+export const buttonEditAvatar = document.querySelector('.profile__image')
 
 export const configValidation = {
   inputSelector: '.popup__item',
